@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <title>Sample Website</title>
+
+        <!--JQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    </head>
+    <body>
+        <h1>This is the best sample website that you have ever seen!!</h1>
+        <p id="info">Infomation:</p>
+    </body>
+
+    <script>
+        //Socket.IO
+        const socket = io.connect('http://localhost:2500');
+
+
+        //Other
+        var ip = ""; 
+        var country = "";
+    
+
+        var browser = "";        
+        var broswerList = ["Vivaldi", "Trident", "Edge", "OPR", "Chrome", "Firefox", "Safari", "MSIE"];
+        var ua = navigator.userAgent;
+        for(var i = 0; i < broswerList.length; i++) {
+            if (ua.indexOf(broswerList[i]) > -1){
+                browser = broswerList[i];
+                break;
+            }
+        }
+        if(browser == "Vivaldi"){
+            browser = "Vivaldi";
+        } else if(browser == "Trident") {
+            browser = "Internet Explorer";
+        } else if(browser == "Edge") {
+            browser = "Microsoft Edge";
+        } else if(browser == "Chrome"){
+            browser = "Google Chrome";
+        } else if(browser == "Firefox") {
+            browser = "Mozilla Firefox";
+        } else if(browser == "Safari") {
+            browser = "Apple Safari";
+        } else if(browser == "OPR") {
+            browser = "Opera";
+        } else if(browser == "MSIE") {
+            browser = "Internet Explorer";
+        } else {
+            browser = "Other"
+        }
+
+
+
+        //Working out OS
+
+        var RawOs = navigator.platform;
+        var os = ""
+
+        if (RawOs == "Win32"){
+            os = "Microsoft Windows (32 Bit)";
+
+            //If Fireforx use special Propertys
+            if (browser == "Mozilla Firefox") {
+                if(navigator.oscpu == "Windows NT 10.0; Win32; x32") {
+                    os = "Microsft Windows 10 (32 Bit)";
+                }
+            }
+
+            //If Chrome use special propertys
+            if (browser == "Google Chrome") {
+                bracketsArray = navigator.appVersion.split(/[()]/);
+
+                //Win10 64Bit
+                if(bracketsArray[1] == "Windows NT 10.0; Win64; x64") {
+                    os = "Microsoft Windows 10 (64 Bit)";
+                }
+
+                //Win10 32Bit
+                if(bracketsArray[1] == "Windows NT 10.0; Win32; x32") {
+                    os = "Microsoft Windows 10 (32 Bit)";
+                }
+
+                //Win8 64Bit
+                if(bracketsArray[1] == "Windows NT 6.2; Win64; x64") {
+                    os = "Microsoft Windows 8 (64 Bit)";
+                }
+
+                //Win8 32Bit
+                if(bracketsArray[1] == "Windows NT 6.2; Win32; x32") {
+                    os = "Microsoft Windows 10 (32 Bit)";
+                }
+
+
+            }
+        } else if (RawOs == "Win64") {
+
+            os = "Microsoft Windows (64 Bit)";
+
+            //If Firefox Use Firefox Special Propertys
+            if (browser == "Mozilla Firefox") {
+                //Win10
+                if(navigator.oscpu == "Windows NT 10.0; Win64; x64") {
+                    os = "Microsoft Windows 10 (64 Bit)";
+                }
+                //Win8
+                if(navigator.oscpu == "Windows NT 6.2; Win64; x64") {
+                    os = "Microsoft Windows 8 (64 Bit)";
+                }
+                //Win7
+                if(navigator.oscpu == "Windows NT 6.1; Win64; x64") {
+                    os = "Microsoft Windows 7 (64 Bit)";
+                }
+                //WinVista
+                if(navigator.oscpu == "Windows NT 6.0; Win64; x64") {
+                    os = "Microsoft Windows Vista (64 Bit)";
+                }
+
+            }
+        } else if(RawOs == "MacIntel"){
+            os = "MacOS";
+        } else if(RawOs == "iPhone") {
+            os = "iOS (iPhone)";
+        } else if(RawOs == "iPad"){
+            os = "iOS (iPad)";
+        } else if(RawOs == "Linux armv7l") {
+            os = "Android";
+        } else {
+            os = "Other"
+        }
+
+        var language = navigator.language
+
+
+        //IP Infomation
+        /*
+        $.get("https://api.ipdata.co/?api-key=KEYGOESHERE", function (response) {
+            console.log(response.ip + ":" + response.country_name);
+            ip = response.ip;
+            country = response.country_name;
+            
+            //Update The infomation after i've got ip infomation
+            $("#info").html('<p>Infomation: <br> <hr> <strong>Operating System:</strong> ' + os +' <br> <strong>Web Browser:</strong> ' + browser +' <br> <hr> <strong>IP Adress:</strong> ' + ip + ' <br> <strong>Country:</strong> ' + country + ' <hr> <br> <strong>Langauge :</strong> ' + language +' <br> <hr> </p>');
+        }, "jsonp");*/
+
+        //Update The infomation after i've got ip infomation
+        $("#info").html('<p>Infomation: <br> <hr> <strong>Operating System:</strong> ' + os +' <br> <strong>Web Browser:</strong> ' + browser +' <br> <hr> <strong>IP Adress:</strong> ' + "NO IP" + ' <br> <strong>Country:</strong> ' + "NO COUNTRY" + ' <hr> <br> <strong>Langauge :</strong> ' + language +' <br> <hr> </p>');
+        
+    </script>
+</html>
